@@ -20,4 +20,14 @@ public class PlantatorCard : Card
 
         return -1;
     }
+
+    public override void Apply() {
+        throw new System.NotImplementedException();
+    }
+
+    public override void Apply(PlayerController playerController) {
+        for(int i = 0;i< cardsDrawn[level]; i++) {
+            playerController.hand.Add();
+        }
+    }
 }

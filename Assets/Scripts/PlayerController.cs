@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,9 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public string nickname;
-    int gold;
+    public int gold;
+    public PlantCard plant;
+    public PlantatorCard plantator;
     public List<Card> hand;
 
     void Start()
@@ -17,5 +20,13 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         
+    }
+
+    internal void ApplyPlantEffect() {
+        plant.Apply(this);
+    }
+
+    internal void ApplyPlantatorEffect() {
+        plantator.Apply(this);
     }
 }

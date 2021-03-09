@@ -20,4 +20,12 @@ public class PlantCard : Card
 
         return upgradeCost[upgradeLevel];
     }
+
+    public override void Apply() {
+        throw new System.NotImplementedException();
+    }
+
+    public override void Apply(PlayerController playerController) {
+        playerController.gold += profit[upgradeLevel]; 
+    }
 }
