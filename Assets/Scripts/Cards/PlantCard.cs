@@ -8,6 +8,9 @@ public class PlantCard : Card
     int[] upgradeCost = { 4, 4 };
     int[] profit = { 2, 3, 4 };
 
+    public PlantCard(string displayName, string id) : base(displayName, id) {
+    }
+
     public void Upgrade() {
         if(upgradeLevel < upgradeCost.Length - 1) {
             upgradeLevel++;
@@ -21,11 +24,7 @@ public class PlantCard : Card
         return upgradeCost[upgradeLevel];
     }
 
-    public override void Apply() {
-        throw new System.NotImplementedException();
-    }
-
     public override void Apply(PlayerController playerController) {
-        playerController.gold += profit[upgradeLevel]; 
+        playerController.gold += profit[upgradeLevel];
     }
 }

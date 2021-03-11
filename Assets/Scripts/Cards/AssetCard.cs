@@ -2,17 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AssetCard : MonoBehaviour
+public class AssetCard : Card
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public AssetCard(string displayName, string id) : base(displayName, id) {
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public override void Apply(PlayerController playerController) {
+        throw new System.NotImplementedException();
     }
 }

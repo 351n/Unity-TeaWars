@@ -6,13 +6,11 @@ public class Region : MonoBehaviour
 {
     public PlayerController owner;
 
-    void Start()
-    {
-        
+    void Start() {
+
     }
 
-    void Update()
-    {
-        
+    void Update() {
+
     }
 }

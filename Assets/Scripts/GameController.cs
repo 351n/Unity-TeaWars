@@ -2,27 +2,40 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class GameController : MonoBehaviour
 {
     Queue<PlayerController> players;
     PlayerController currentPlayer;
 
-    void Start()
-    {
-        
+    void Start() {
+        Initialize();
+        StartTurn();
     }
 
-    void Update()
-    {
-        
+    void Update() {
+
+    }
+
+    private void Initialize() {
+        players = new Queue<PlayerController>(FindObjectsOfType<PlayerController>().ToList());
+        currentPlayer = players.Peek();
     }
 
     public void StartTurn() {
-        PlagueCard plague = GetPlagueCard();
-        plague.Apply();
+        Debug.Log("Starting turn");
+        Debug.Log("Drawing Plague Card");
+        PlagueCard plague = CardsController.instance.GetPlagueCard();
+        Debug.Log(plague);
+
+        Debug.Log("Applying Plague Card");
+        plague.Apply(GetPlayersList());
+
         if(plague.effect.skippedTurns <= 0) {
+            Debug.Log($"Applying Plant Card for {currentPlayer.nickname}");
             currentPlayer.ApplyPlantEffect();
+            Debug.Log($"Applying Plantator Card for {currentPlayer.nickname}");
             currentPlayer.ApplyPlantatorEffect();
         }
     }
@@ -32,7 +45,9 @@ public class GameController : MonoBehaviour
 
     }
 
-    private PlagueCard GetPlagueCard() {
-        throw new NotImplementedException();
+
+
+    public List<PlayerController> GetPlayersList() {
+        return players.ToList();
     }
 }
