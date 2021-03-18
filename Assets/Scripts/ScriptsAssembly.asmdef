@@ -3,7 +3,8 @@
     "rootNamespace": "",
     "references": [
         "Unity.TextMeshPro.Editor",
-        "Unity.TextMeshPro"
+        "Unity.TextMeshPro",
+        "CardsAssembly"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
