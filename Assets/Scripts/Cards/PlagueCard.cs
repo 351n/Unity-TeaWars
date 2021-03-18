@@ -8,7 +8,7 @@ public class PlagueCard : Card
     public Effect effect = new Effect();
 
     public PlagueCard(string displayName, string id) : base(displayName, id) {
-        target = Target.Player;        
+        target = Target.Player;
     }
 
     public override void Apply(PlayerController playerController) {
@@ -23,7 +23,7 @@ public class PlagueCard : Card
 
     public override string ToString() {
         string result = base.ToString();
-        result += $" T<{target}> E{effect}" ;
+        result += $" T<{target}> E{effect}";
         return result;
     }
 }

@@ -19,13 +19,15 @@ public class CardsController : MonoBehaviour
     Stack<Card> cardsStack = new Stack<Card>();
 
     void Start() {
-        plagueStack.Push(new PlagueCard("Plague Card","CRD_PLG_1"));
+        for(int i = 0; i < 5; i++) {
+            plagueStack.Push(new PlagueCard("Test Plague Card", "CRD_PLG_1"));
 
-        cardsStack.Push(new TrickeryCard("Trickery Card", "CRD_TRC_1"));
+            cardsStack.Push(new TrickeryCard("Test Trickery Card", "CRD_TRC_1"));
 
-        cardsStack.Push(new WorkerCard("Worker Card", "CRD_WRK_1"));
+            cardsStack.Push(new WorkerCard("Test Worker Card", "CRD_WRK_1"));
 
-        cardsStack.Push(new AssetCard("Asset Card", "CRD_AST_1"));
+            cardsStack.Push(new AssetCard("Test Asset Card", "CRD_AST_1"));
+        }
     }
 
     public PlagueCard GetPlagueCard() {
@@ -33,6 +35,10 @@ public class CardsController : MonoBehaviour
     }
 
     internal Card Draw() {
-       return cardsStack.Peek();
+        if(cardsStack.Count > 1) {
+            return cardsStack.Pop();
+        } else {
+            return cardsStack.Peek();
+        }
     }
 }

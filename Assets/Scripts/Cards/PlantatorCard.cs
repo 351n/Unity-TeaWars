@@ -18,15 +18,29 @@ public class PlantatorCard : Card
     }
 
     public int GetUpgradeCost() {
-        if(level==0)
-        return upgradeCost;
+        if(level == 0)
+            return upgradeCost;
 
         return -1;
     }
 
+    public int GetCardsDrawnValue() {
+        return cardsDrawn[level];
+    }
+
     public override void Apply(PlayerController playerController) {
-        for(int i = 0;i< cardsDrawn[level]; i++) {
+        Debug.Log($"Player hand before: {playerController.hand.Count}");
+        for(int i = 0; i < cardsDrawn[level]; i++) {
             playerController.hand.Add(CardsController.instance.Draw());
         }
+        Debug.Log($"Player hand after: {playerController.hand.Count}");
+    }
+
+    public override string ToString() {
+        return $"{base.ToString()} {GetEffectString()}";
+    }
+
+    public string GetEffectString() {
+        return $"D:{cardsDrawn[level]}";
     }
 }

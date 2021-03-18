@@ -21,6 +21,12 @@ public class GameController : MonoBehaviour
     private void Initialize() {
         players = new Queue<PlayerController>(FindObjectsOfType<PlayerController>().ToList());
         currentPlayer = players.Peek();
+
+        foreach(PlayerController p in GetPlayersList()) {
+            for(int i = 0; i < 5; i++) {
+                p.hand.Add(CardsController.instance.Draw());
+            }
+        }
     }
 
     public void StartTurn() {
@@ -38,14 +44,15 @@ public class GameController : MonoBehaviour
             Debug.Log($"Applying Plantator Card for {currentPlayer.nickname}");
             currentPlayer.ApplyPlantatorEffect();
         }
+
+        currentPlayer.SelectCard(new WorkerCard("Bob budowniczy", "BOB"));
+        currentPlayer.PlaySelectedCard(Zone.Chimera);
     }
 
 
     public void EndTurn() {
 
     }
-
-
 
     public List<PlayerController> GetPlayersList() {
         return players.ToList();
