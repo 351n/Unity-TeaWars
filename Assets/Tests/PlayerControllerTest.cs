@@ -103,4 +103,75 @@ public class PlayerControllerTest
 
         Assert.AreEqual(expected, player.Gold);
     }
+
+    [Test]
+    public void PlayCardAndCheckIfCanPlayAnother() {
+        PlayerController player = new PlayerController();
+        Region region = new Region(player);
+        player.region = region;
+        AssetCard card = new AssetCard("Test Asset Card", "TST");
+
+        player.SelectCard(card);
+        player.SelectAssetZone(Zone.Cerber);
+        player.PlaySelectedCard();
+
+        Assert.IsTrue(player.UpdateCardsPermissions());
+    }
+
+    [Test]
+    public void PlayTwoAssetCards() {
+        PlayerController player = new PlayerController();
+        Region region = new Region(player);
+        player.region = region;
+        AssetCard card = new AssetCard("Test Asset Card", "TST");
+        AssetCard other = new AssetCard("Other Asset Card", "TST");
+
+        player.SelectCard(card);
+        player.SelectAssetZone(Zone.Cerber);
+        player.PlaySelectedCard();
+
+        player.SelectCard(other);
+        player.SelectAssetZone(Zone.Hydra);
+        player.PlaySelectedCard();
+
+        Assert.IsFalse(player.UpdateCardsPermissions());
+    }
+
+    [Test]
+    public void PlayTwoWorkerCards() {
+        PlayerController player = new PlayerController();
+        Region region = new Region(player);
+        player.region = region;
+        WorkerCard card = new WorkerCard("Test Worker Card", "TST");
+        WorkerCard other = new WorkerCard("Other Worker Card", "TST");
+
+        player.SelectCard(card);
+        player.SelectAssetZone(Zone.Cerber);
+        player.PlaySelectedCard();
+
+        player.SelectCard(other);
+        player.SelectAssetZone(Zone.Hydra);
+        player.PlaySelectedCard();
+
+        Assert.IsFalse(player.UpdateCardsPermissions());
+    }
+
+    [Test]
+    public void PlayTwoDifferentCards() {
+        PlayerController player = new PlayerController();
+        Region region = new Region(player);
+        player.region = region;
+        AssetCard card = new AssetCard("Test Asset Card", "TST");
+        WorkerCard other = new WorkerCard("Test Worker Card", "TST");
+
+        player.SelectCard(card);
+        player.SelectAssetZone(Zone.Cerber);
+        player.PlaySelectedCard();
+
+        player.SelectCard(other);
+        player.SelectAssetZone(Zone.Cerber);
+        player.PlaySelectedCard();
+
+        Assert.IsFalse(player.UpdateCardsPermissions());
+    }
 }

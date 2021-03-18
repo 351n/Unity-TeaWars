@@ -19,7 +19,11 @@ public class PlayerController : MonoBehaviour
     private Card selectedCard;
     private Zone selectedZone;
 
+    bool playedAssetCard = false;
+    bool playedWorkerCard = false;
+    bool playedTrickeryCard = false;
 
+    bool canPlayTwoCards = true;
 
     void Start() {
         regionGameObject.UpdateUI();
@@ -37,7 +41,7 @@ public class PlayerController : MonoBehaviour
         ui.UpdateHand(hand);
     }
 
-    internal void SelectCard(Card card) {
+    public void SelectCard(Card card) {
         selectedCard = card;
 
         region.UnlockAssetZonesSelection();
@@ -51,22 +55,44 @@ public class PlayerController : MonoBehaviour
 
         Debug.Log($"{nickname} selected {selectedZone}");
 
-        ui.ShowConfirmButton();
+        if(ui) {
+            ui.ShowConfirmButton();
+        }
     }
 
     public void PlaySelectedCard() {
-        if(selectedCard is WorkerCard) {
+        if(selectedCard is WorkerCard && (!playedWorkerCard || canPlayTwoCards)) {
             PlayCard(selectedCard as WorkerCard, selectedZone);
-        } else if(selectedCard is AssetCard) {
+
+            if(!playedWorkerCard) {
+                playedWorkerCard = true;
+            } else {
+                canPlayTwoCards = false;
+            }
+        } else if(selectedCard is AssetCard && (!playedAssetCard || canPlayTwoCards)) {
             PlayCard(selectedCard as AssetCard, selectedZone);
+
+            if(!playedAssetCard) {
+                playedAssetCard = true;
+            } else {
+                canPlayTwoCards = false;
+            }
         }
 
-        hand.Remove(selectedCard);
-        ui.UpdateHand(hand);
+        UpdateCardsPermissions();
+    }
 
-        ui.HideConfirmButton();
-        regionGameObject.region.LockAssetZonesSelection();
-        ResetSelection();
+    public bool UpdateCardsPermissions() {
+        if(canPlayTwoCards) {
+            bool a = playedAssetCard;
+            bool b = playedWorkerCard;
+            bool c = playedTrickeryCard;
+
+            //check if zero or only one was played
+            canPlayTwoCards = ((!a && !b && !c) || (!a && !b && c) || (!a && b && !c) || (a && !b && !c));
+        }
+
+        return canPlayTwoCards;
     }
 
     internal void UpdateRegionUI() {
@@ -81,6 +107,16 @@ public class PlayerController : MonoBehaviour
 
     internal void PlayCard(Card card, Zone zone) {
         region.PlayCard(card, zone);
+
+        hand.Remove(selectedCard);
+
+        if(ui) {
+            ui.UpdateHand(hand);
+            ui.HideConfirmButton();
+        }
+
+        region.LockAssetZonesSelection();
+        ResetSelection();
     }
 
     public void AddGold(uint value) {

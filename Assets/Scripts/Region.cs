@@ -59,8 +59,10 @@ public class Region : MonoBehaviour
     }
 
     private void UnlockAssetsZones(List<Zone> lists) {
-        foreach(Zone z in lists) {
-            ui.assets[(int)z].UnlockSelection();
+        if(ui) {
+            foreach(Zone z in lists) {
+                ui.assets[(int)z].UnlockSelection();
+            }
         }
     }
 
@@ -70,8 +72,10 @@ public class Region : MonoBehaviour
     }
 
     private void LockAssetsZones() {
-        foreach(AssetUI a in ui.assets) {
-            a.LockSelection();
+        if(ui) {
+            foreach(AssetUI a in ui.assets) {
+                a.LockSelection();
+            }
         }
     }
 
