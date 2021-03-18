@@ -64,4 +64,8 @@ public class GameController : MonoBehaviour
     public List<PlayerController> GetPlayersList() {
         return players.ToList();
     }
+
+    internal void UpdateRegionUI() {
+        currentPlayer.UpdateRegionUI();
+    }
 }

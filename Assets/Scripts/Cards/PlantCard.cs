@@ -13,7 +13,7 @@ public class PlantCard : Card
 
     public void Upgrade(PlayerController playerController) {
         if(playerController.Gold >= GetUpgradeCost()) {
-            if(upgradeLevel < upgradeCost.Length - 1) {
+            if(upgradeLevel < upgradeCost.Length) {
                 playerController.SubstractGold(GetUpgradeCost());
                 upgradeLevel++;
             }
@@ -21,10 +21,11 @@ public class PlantCard : Card
     }
 
     public uint GetUpgradeCost() {
-        if(upgradeLevel == upgradeCost.Length - 1)
+        if(upgradeLevel < upgradeCost.Length - 1) {
+            return upgradeCost[upgradeLevel];
+        } else {
             return 0;
-
-        return upgradeCost[upgradeLevel];
+        }
     }
 
     public uint GetProfitValue() {

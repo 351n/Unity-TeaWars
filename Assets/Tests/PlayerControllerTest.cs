@@ -51,6 +51,8 @@ public class PlayerControllerTest
     [Test]
     public void PlantCardEffect() {
         PlayerController player = new PlayerController();
+        Region region = new Region(player);
+        player.region = region;
         PlantCard plant = new PlantCard("Test Plant", "TST");
         player.region.plant = plant;
         uint expectedGold = plant.GetProfitValue();
@@ -63,6 +65,8 @@ public class PlayerControllerTest
     [Test]
     public void PlantCardUpgradedEffect() {
         PlayerController player = new PlayerController();
+        Region region = new Region(player);
+        player.region = region;
         PlantCard plant = new PlantCard("Test Plant", "TST");
 
         player.AddGold(plant.GetUpgradeCost());

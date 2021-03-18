@@ -69,6 +69,11 @@ public class PlayerController : MonoBehaviour
         ResetSelection();
     }
 
+    internal void UpdateRegionUI() {
+        if(regionGameObject)
+            regionGameObject.UpdateUI();
+    }
+
     private void ResetSelection() {
         selectedCard = null;
         selectedZone = Zone.None;

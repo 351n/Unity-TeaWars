@@ -28,28 +28,29 @@ public class Region : MonoBehaviour
     }
 
     public void PlayCard(Card card, Zone zone) {
+        if(!isInitialized) {
+            InitializeFields();
+        }
+
         if(card is WorkerCard) {
             PlayCard(card as WorkerCard, zone);
         } else if(card is AssetCard) {
             PlayCard(card as AssetCard, zone);
         }
+
+        if(ui) { ui.UpdateUI(); }
     }
 
-    public void PlayCard(WorkerCard card, Zone zone) {
-        if(!isInitialized) {
-            InitializeFields();
-        }
-
+    private void PlayCard(WorkerCard card, Zone zone) {
         if(workers[(int)zone] == null) {
             workers.Insert((int)zone, card);
         }
     }
 
-    public void PlayCard(AssetCard card, Zone zone) {
+    private void PlayCard(AssetCard card, Zone zone) {
         if(assets[(int)zone] == null) {
             assets.Insert((int)zone, card);
         }
-        GameController.instance.currentPlayer.regionGameObject.UpdateUI();
     }
 
     internal void UnlockAssetZonesSelection() {

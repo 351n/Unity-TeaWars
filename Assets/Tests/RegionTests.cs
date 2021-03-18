@@ -10,6 +10,7 @@ public class RegionTests
     public void RegionBuildAsset() {
         PlayerController player = new PlayerController();
         Region region = new Region(player);
+        player.region = region;
         AssetCard card = new AssetCard("Test Asset Card", "TST");
 
         region.PlayCard(card, Zone.Cerber);
@@ -19,6 +20,7 @@ public class RegionTests
     public void RegionBuildAssetFieldOccupy() {
         PlayerController player = new PlayerController();
         Region region = new Region(player);
+        player.region = region;
         AssetCard card = new AssetCard("Test Asset Card", "TST");
 
         region.PlayCard(card, Zone.Cerber);
@@ -31,6 +33,7 @@ public class RegionTests
     public void RegionBuildAssetOnSameField() {
         PlayerController player = new PlayerController();
         Region region = new Region(player);
+        player.region = region;
         AssetCard card = new AssetCard("Test Asset Card", "TST");
         AssetCard otherCard = new AssetCard("Other Asset Card", "TST");
 
@@ -44,6 +47,7 @@ public class RegionTests
     public void RegionBuildWorker() {
         PlayerController player = new PlayerController();
         Region region = new Region(player);
+        player.region = region;
         WorkerCard card = new WorkerCard("Test Worker Card", "TST");
 
         region.PlayCard(card, Zone.Cerber);
@@ -53,10 +57,11 @@ public class RegionTests
     public void RegionBuildWorkerFieldOccupy() {
         PlayerController player = new PlayerController();
         Region region = new Region(player);
+        player.region = region;
         WorkerCard card = new WorkerCard("Test Worker Card", "TST");
 
         region.PlayCard(card, Zone.Cerber);
-        List<Zone> emptyWorkersZones = region.GetEmptyAssetsFields();
+        List<Zone> emptyWorkersZones = region.GetEmptyWorkerFields();
 
         Assert.IsFalse(emptyWorkersZones.Contains(Zone.Cerber));
     }
@@ -65,6 +70,7 @@ public class RegionTests
     public void RegionBuildWorkerOnSameField() {
         PlayerController player = new PlayerController();
         Region region = new Region(player);
+        player.region = region;
         WorkerCard card = new WorkerCard("Test Worker Card", "TST");
         WorkerCard otherCard = new WorkerCard("Other Worker Card", "TST");
 
