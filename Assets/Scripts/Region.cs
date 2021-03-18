@@ -105,8 +105,6 @@ public class Region : MonoBehaviour
             }
         }
 
-        Debug.Log(result.Count);
-
         return result;
     }
 }

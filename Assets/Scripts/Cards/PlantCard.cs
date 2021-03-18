@@ -21,7 +21,7 @@ public class PlantCard : Card
     }
 
     public uint GetUpgradeCost() {
-        if(upgradeLevel < upgradeCost.Length - 1) {
+        if(upgradeLevel < upgradeCost.Length) {
             return upgradeCost[upgradeLevel];
         } else {
             return 0;

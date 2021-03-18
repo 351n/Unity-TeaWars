@@ -40,7 +40,7 @@ public class CardsTests
     }
 
     [Test]
-    public void PlantTricUpgradedProfitTest() {
+    public void PlantTriceUpgradedProfitTest() {
         PlayerController player = new PlayerController();
         player.AddGold(1337);
         PlantCard card = new PlantCard("Test Plant Card", "TST");
@@ -51,5 +51,31 @@ public class CardsTests
         card.Upgrade(player);
 
         Assert.AreEqual(expectedProfit, card.GetProfitValue());
+    }
+
+    [Test]
+    public void PlantUpgradeNoMoneyTest() {
+        PlayerController player = new PlayerController();
+        player.AddGold(2);
+        PlantCard card = new PlantCard("Test Plant Card", "TST");
+        int expectedProfit = 2;
+
+        card.Upgrade(player);
+
+        Assert.AreEqual(expectedProfit, card.GetProfitValue());
+    }
+
+    [Test]
+    public void PlantUpgradeTwiceNoMoneyTest() {
+        PlayerController player = new PlayerController();
+        player.AddGold(5);
+        PlantCard card = new PlantCard("Test Plant Card", "TST");
+        int expected = 4;
+
+        card.Upgrade(player);
+        card.Upgrade(player);
+        card.Upgrade(player);
+
+        Assert.AreEqual(expected, card.GetUpgradeCost());        
     }
 }

@@ -59,7 +59,7 @@ public class PlayerControllerTest
 
         plant.Apply(player);
 
-        Assert.AreEqual(expectedGold,player.Gold);
+        Assert.AreEqual(expectedGold, player.Gold);
     }
 
     [Test]
@@ -77,5 +77,30 @@ public class PlayerControllerTest
         plant.Apply(player);
 
         Assert.AreEqual(expectedGold, player.Gold);
+    }
+
+    [Test]
+    public void PlantUpgradeNotEnoughMoneyTest() {
+        PlayerController player = new PlayerController();
+        player.AddGold(2);
+        PlantCard card = new PlantCard("Test Plant Card", "TST");
+        int expected = 2;
+
+        card.Upgrade(player);
+
+        Assert.AreEqual(expected, player.Gold);
+    }
+
+    [Test]
+    public void PlantTwiceUpgradeNotEnoughMoneyTest() {
+        PlayerController player = new PlayerController();
+        player.AddGold(2);
+        PlantCard card = new PlantCard("Test Plant Card", "TST");
+        int expected = 2;
+
+        card.Upgrade(player);
+        card.Upgrade(player);
+
+        Assert.AreEqual(expected, player.Gold);
     }
 }
