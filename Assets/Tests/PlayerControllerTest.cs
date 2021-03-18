@@ -52,7 +52,7 @@ public class PlayerControllerTest
     public void PlantCardEffect() {
         PlayerController player = new PlayerController();
         PlantCard plant = new PlantCard("Test Plant", "TST");
-        player.plant = plant;
+        player.region.plant = plant;
         uint expectedGold = plant.GetProfitValue();
 
         plant.Apply(player);
@@ -66,7 +66,7 @@ public class PlayerControllerTest
         PlantCard plant = new PlantCard("Test Plant", "TST");
 
         player.AddGold(plant.GetUpgradeCost());
-        player.plant = plant;
+        player.region.plant = plant;
         plant.Upgrade(player);
         uint expectedGold = plant.GetProfitValue();
 

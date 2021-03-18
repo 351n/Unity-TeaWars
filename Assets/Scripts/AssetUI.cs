@@ -1,18 +1,44 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using System;
 
 public class AssetUI : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public Region region;
+    public Zone zone;
+
+    public bool isSelectable = false;
+
+    public TextMeshProUGUI nameText;
+    public Sprite image;
+    public TextMeshProUGUI effectText;
+    public AssetCard card;
+    public GameObject border;
+
+    public void SelectThisAssetZone() {
+        if(isSelectable)
+            region.SelectAssetZone(zone);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    internal void UpdateUI(AssetCard card) {
+        if(card != null) {
+            isSelectable = false;
+            this.card = card;
+            nameText.text = card.displayName;
+            effectText.text = $"THIS IS ASSET";
+        } else {
+            nameText.text = "";
+            effectText.text = $"";
+        }
+    }
+
+    public void UnlockSelection() {
+        isSelectable = true;
+        border.SetActive(true);
+    }
+
+    internal void LockSelection() {
+        isSelectable = false;
+        border.SetActive(false);
     }
 }

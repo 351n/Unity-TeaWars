@@ -6,8 +6,18 @@ using System.Linq;
 
 public class GameController : MonoBehaviour
 {
+    #region Singleton
+
+    public static GameController instance;
+
+    void Awake() {
+        instance = this;
+    }
+
+    #endregion
+
     Queue<PlayerController> players;
-    PlayerController currentPlayer;
+    public PlayerController currentPlayer;
 
     void Start() {
         Initialize();
@@ -44,9 +54,6 @@ public class GameController : MonoBehaviour
             Debug.Log($"Applying Plantator Card for {currentPlayer.nickname}");
             currentPlayer.ApplyPlantatorEffect();
         }
-
-        currentPlayer.SelectCard(new WorkerCard("Bob budowniczy", "BOB"));
-        currentPlayer.PlaySelectedCard(Zone.Chimera);
     }
 
 

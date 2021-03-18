@@ -5,12 +5,20 @@ using UnityEngine;
 
 public class RegionGameObject : MonoBehaviour
 {
+    public Region region;
     public CardGameObject plantatorCard;
     public CardGameObject plantCard;
 
-    internal void UpdateUI(PlantatorCard plantator, PlantCard plant) {
-        plantatorCard.UpdateUI(plantator);
-        plantCard.UpdateUI(plant);
+    public List<AssetUI> assets;
+
+    internal void UpdateUI() {
+        if(!region.isInitialized) { region.InitializeFields(); }
+        plantatorCard.UpdateUI(region.plantator);
+        plantCard.UpdateUI(region.plant);
+
+        for(int i = 0; i < 4; i++) {
+            assets[i].UpdateUI(region.GetAsset((Zone)i));
+        }
     }
 
     internal void ShowEmptyWorkerFields(Region region) {

@@ -5,22 +5,38 @@ using UnityEngine;
 
 public class Region : MonoBehaviour
 {
+    public RegionGameObject ui;
     public PlayerController owner;
-    List<WorkerCard> workers = new List<WorkerCard>(4){ null, null, null, null };
-    List<AssetCard> assets = new List<AssetCard>(4){ null, null, null, null };
+    public PlantCard plant = new PlantCard("Marihuaeh", "PLT");
+    public PlantatorCard plantator = new PlantatorCard("Heniek Rolnik", "PNT");
+    List<WorkerCard> workers = new List<WorkerCard>(4) { null, null, null, null };
+    List<AssetCard> assets = new List<AssetCard>(4) { null, null, null, null };
+    private bool canSelectAssetZone = false;
+    internal bool isInitialized = false;
 
     public Region(PlayerController owner) {
         this.owner = owner;
         InitializeFields();
     }
 
-    private void InitializeFields() {
+    public void InitializeFields() {
+        plant = new PlantCard("Marihuaeh", "PLT");
+        plantator = new PlantatorCard("Heniek Rolnik", "PNT");
         workers = new List<WorkerCard>(4) { null, null, null, null };
         assets = new List<AssetCard>(4) { null, null, null, null };
+        isInitialized = true;
+    }
+
+    public void PlayCard(Card card, Zone zone) {
+        if(card is WorkerCard) {
+            PlayCard(card as WorkerCard, zone);
+        } else if(card is AssetCard) {
+            PlayCard(card as AssetCard, zone);
+        }
     }
 
     public void PlayCard(WorkerCard card, Zone zone) {
-        if(workers == null) {
+        if(!isInitialized) {
             InitializeFields();
         }
 
@@ -30,10 +46,36 @@ public class Region : MonoBehaviour
     }
 
     public void PlayCard(AssetCard card, Zone zone) {
-        Debug.Log(assets.Count);
         if(assets[(int)zone] == null) {
             assets.Insert((int)zone, card);
         }
+        GameController.instance.currentPlayer.regionGameObject.UpdateUI();
+    }
+
+    internal void UnlockAssetZonesSelection() {
+        canSelectAssetZone = true;
+        UnlockAssetsZones(GetEmptyAssetsFields());
+    }
+
+    private void UnlockAssetsZones(List<Zone> lists) {
+        foreach(Zone z in lists) {
+            ui.assets[(int)z].UnlockSelection();
+        }
+    }
+
+    internal void LockAssetZonesSelection() {
+        canSelectAssetZone = false;
+        LockAssetsZones();
+    }
+
+    private void LockAssetsZones() {
+        foreach(AssetUI a in ui.assets) {
+            a.LockSelection();
+        }
+    }
+
+    public void SelectAssetZone(Zone zone) {
+        GameController.instance.currentPlayer.SelectAssetZone(zone);
     }
 
     public WorkerCard GetWorker(Zone zone) {
@@ -47,7 +89,7 @@ public class Region : MonoBehaviour
     public List<Zone> GetEmptyWorkerFields() {
         List<Zone> result = new List<Zone>();
         for(int i = 0; i < 4; i++) {
-            if(i > workers.Count && workers[i] == null) {
+            if(i > workers.Count || workers[i] == null) {
                 result.Add((Zone)i);
             }
         }
@@ -57,12 +99,15 @@ public class Region : MonoBehaviour
     public List<Zone> GetEmptyAssetsFields() {
         List<Zone> result = new List<Zone>();
         for(int i = 0; i < 4; i++) {
-            if(i > assets.Count && assets[i] == null) {
+            if(i > assets.Count || assets[i] == null) {
                 result.Add((Zone)i);
             }
         }
+
+        Debug.Log(result.Count);
+
         return result;
     }
 }
 
-public enum Zone { Chimera, Cerber, Hydra, Gorgon }
+public enum Zone { Chimera, Cerber, Hydra, Gorgon, None }
