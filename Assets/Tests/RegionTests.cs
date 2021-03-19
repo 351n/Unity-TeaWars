@@ -4,6 +4,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
+#pragma warning disable UNT0010 // Component instance creation
 public class RegionTests
 {
     [Test]
@@ -80,3 +81,4 @@ public class RegionTests
         Assert.AreEqual(card, region.GetWorker(Zone.Cerber));
     }
 }
+#pragma warning restore UNT0010 // Component instance creation

@@ -9,8 +9,6 @@ public class PlayerController : MonoBehaviour
     public uint Gold { get => gold; private set => gold = value; }
     public List<Card> hand = new List<Card>();
     public Region region;
-    //public PlantCard plant = new PlantCard("Marihuaeh", "PLT");
-    //public PlantatorCard plantator = new PlantatorCard("Heniek Rolnik", "PNT");
 
     public RegionGameObject regionGameObject;
     public PlayerUI ui;
@@ -18,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private uint gold;
     private Card selectedCard;
     private Zone selectedZone;
+    private PlayerController selectedTarget;
 
     bool playedAssetCard = false;
     bool playedWorkerCard = false;
@@ -31,33 +30,50 @@ public class PlayerController : MonoBehaviour
     }
 
     internal void ApplyPlantEffect() {
-        Debug.Log($"Applying {region.plant}");
-        region.plant.Apply(this);
+        region.ApplyPlantEffect();
     }
 
     internal void ApplyPlantatorEffect() {
-        Debug.Log($"Applying {region.plantator}");
-        region.plantator.Apply(this);
+        region.ApplyPlantatorEffect();
         ui.UpdateHand(hand);
     }
 
     public void SelectCard(Card card) {
         selectedCard = card;
 
-        region.UnlockAssetZonesSelection();
-
-        Debug.Log($"{nickname} selected {selectedCard}");
+        if(card is AssetCard) {
+            region.UnlockAssetZonesSelection();
+        } else if(card is WorkerCard) {
+            region.UnlockWorkerZonesSelection();
+        } else if(card is TrickeryCard) {
+            TrickeryCard t = card as TrickeryCard;
+            if(t.Target == Target.Player) {
+                //selection of player
+            } else if (t.Target == Target.Building) {
+                //selection of player and building
+            }
+        }
     }
-
 
     public void SelectAssetZone(Zone zone) {
         selectedZone = zone;
 
-        Debug.Log($"{nickname} selected {selectedZone}");
+        if(ui) {
+            ui.ShowConfirmButton();
+        }
+    }
+
+    public void SelectWorkerZone(Zone zone) {
+        selectedZone = zone;
 
         if(ui) {
             ui.ShowConfirmButton();
         }
+    }
+
+    private void ResetSelection() {
+        selectedCard = null;
+        selectedZone = Zone.None;
     }
 
     public void PlaySelectedCard() {
@@ -77,6 +93,14 @@ public class PlayerController : MonoBehaviour
             } else {
                 canPlayTwoCards = false;
             }
+        } else if(selectedCard is TrickeryCard && (!playedTrickeryCard || canPlayTwoCards)) {
+            PlayCard(selectedCard as TrickeryCard, selectedTarget);
+
+            if(!playedAssetCard) {
+                playedTrickeryCard = true;
+            } else {
+                canPlayTwoCards = false;
+            }
         }
 
         UpdateCardsPermissions();
@@ -88,25 +112,17 @@ public class PlayerController : MonoBehaviour
             bool b = playedWorkerCard;
             bool c = playedTrickeryCard;
 
-            //check if zero or only one was played
+            //check if zero or only one card of any type was played
             canPlayTwoCards = ((!a && !b && !c) || (!a && !b && c) || (!a && b && !c) || (a && !b && !c));
         }
 
         return canPlayTwoCards;
     }
 
-    internal void UpdateRegionUI() {
-        if(regionGameObject)
-            regionGameObject.UpdateUI();
-    }
-
-    private void ResetSelection() {
-        selectedCard = null;
-        selectedZone = Zone.None;
-    }
-
     internal void PlayCard(Card card, Zone zone) {
-        region.PlayCard(card, zone);
+        if(card is AssetCard || card is WorkerCard) {
+            region.PlayCard(card, zone);
+        }
 
         hand.Remove(selectedCard);
 
@@ -116,7 +132,12 @@ public class PlayerController : MonoBehaviour
         }
 
         region.LockAssetZonesSelection();
+        region.LockWorkersZonesSelection();
         ResetSelection();
+    }
+
+    internal void PlayCard(TrickeryCard card, PlayerController target) {
+        throw new NotImplementedException();
     }
 
     public void AddGold(uint value) {
@@ -133,5 +154,10 @@ public class PlayerController : MonoBehaviour
         } else {
             gold -= value;
         }
+    }
+
+    internal void UpdateRegionUI() {
+        if(regionGameObject)
+            regionGameObject.UpdateUI();
     }
 }

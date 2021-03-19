@@ -10,6 +10,7 @@ public class RegionGameObject : MonoBehaviour
     public CardGameObject plantCard;
 
     public List<AssetUI> assets;
+    public List<WorkerUI> workers;
 
     internal void UpdateUI() {
         if(!region.isInitialized) { region.InitializeFields(); }

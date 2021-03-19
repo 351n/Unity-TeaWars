@@ -13,6 +13,7 @@ public class Region : MonoBehaviour
     List<AssetCard> assets = new List<AssetCard>(4) { null, null, null, null };
     private bool canSelectAssetZone = false;
     internal bool isInitialized = false;
+    private bool canSelectWorkersZone;
 
     public Region(PlayerController owner) {
         this.owner = owner;
@@ -25,6 +26,14 @@ public class Region : MonoBehaviour
         workers = new List<WorkerCard>(4) { null, null, null, null };
         assets = new List<AssetCard>(4) { null, null, null, null };
         isInitialized = true;
+    }
+
+    internal void ApplyPlantEffect() {
+        plant.Apply(owner);
+    }
+
+    internal void ApplyPlantatorEffect() {
+        plantator.Apply(owner);
     }
 
     public void PlayCard(Card card, Zone zone) {
@@ -53,6 +62,7 @@ public class Region : MonoBehaviour
         }
     }
 
+    #region AssetsSelection
     internal void UnlockAssetZonesSelection() {
         canSelectAssetZone = true;
         UnlockAssetsZones(GetEmptyAssetsFields());
@@ -83,12 +93,44 @@ public class Region : MonoBehaviour
         GameController.instance.currentPlayer.SelectAssetZone(zone);
     }
 
-    public WorkerCard GetWorker(Zone zone) {
-        return workers[(int)zone];
+    #endregion
+
+    internal void UnlockWorkerZonesSelection() {
+        canSelectWorkersZone = true;
+        UnlockWorkersZones(GetEmptyWorkerFields());
+    }
+
+    private void UnlockWorkersZones(List<Zone> lists) {
+        if(ui) {
+            foreach(Zone z in lists) {
+                ui.workers[(int)z].UnlockSelection();
+            }
+        }
+    }
+
+    internal void LockWorkersZonesSelection() {
+        canSelectAssetZone = false;
+        LockWorkersZones();
+    }
+
+    private void LockWorkersZones() {
+        if(ui) {
+            foreach(AssetUI a in ui.assets) {
+                a.LockSelection();
+            }
+        }
+    }
+
+    public void SelectWorkerZone(Zone zone) {
+        GameController.instance.currentPlayer.SelectWorkerZone(zone);
     }
 
     public AssetCard GetAsset(Zone zone) {
         return assets[(int)zone];
+    }
+
+    public WorkerCard GetWorker(Zone zone) {
+        return workers[(int)zone];
     }
 
     public List<Zone> GetEmptyWorkerFields() {

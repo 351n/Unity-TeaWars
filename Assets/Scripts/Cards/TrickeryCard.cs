@@ -10,9 +10,11 @@ public class TrickeryCard : Card
     public TrickeryCard(string displayName, string id) : base(displayName, id) {
     }
 
+    public Target Target { get => target; private set => target = value; }
+
     public override void Apply(PlayerController playerController) {
         throw new System.NotImplementedException();
     }
 }
 
-public enum Target { Player, Plant, Building }
+public enum Target { Player, Plant, Building, Worker }

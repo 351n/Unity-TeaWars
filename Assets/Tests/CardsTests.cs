@@ -4,6 +4,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
+#pragma warning disable UNT0010 // Component instance creation
 public class CardsTests
 {
     [Test]
@@ -76,6 +77,7 @@ public class CardsTests
         card.Upgrade(player);
         card.Upgrade(player);
 
-        Assert.AreEqual(expected, card.GetUpgradeCost());        
+        Assert.AreEqual(expected, card.GetUpgradeCost());
     }
 }
+#pragma warning restore UNT0010 // Component instance creation

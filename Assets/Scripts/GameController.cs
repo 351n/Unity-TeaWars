@@ -24,10 +24,6 @@ public class GameController : MonoBehaviour
         StartTurn();
     }
 
-    void Update() {
-
-    }
-
     private void Initialize() {
         players = new Queue<PlayerController>(FindObjectsOfType<PlayerController>().ToList());
         currentPlayer = players.Peek();
@@ -40,22 +36,14 @@ public class GameController : MonoBehaviour
     }
 
     public void StartTurn() {
-        Debug.Log("Starting turn");
-        Debug.Log("Drawing Plague Card");
         PlagueCard plague = CardsController.instance.GetPlagueCard();
-        Debug.Log(plague);
-
-        Debug.Log("Applying Plague Card");
         plague.Apply(GetPlayersList());
 
         if(plague.effect.skippedTurns <= 0) {
-            Debug.Log($"Applying Plant Card for {currentPlayer.nickname}");
             currentPlayer.ApplyPlantEffect();
-            Debug.Log($"Applying Plantator Card for {currentPlayer.nickname}");
             currentPlayer.ApplyPlantatorEffect();
         }
     }
-
 
     public void EndTurn() {
 

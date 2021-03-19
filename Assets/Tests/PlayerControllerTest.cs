@@ -4,6 +4,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
+#pragma warning disable UNT0010 // Component instance creation
 public class PlayerControllerTest
 {
     [Test]
@@ -175,3 +176,4 @@ public class PlayerControllerTest
         Assert.IsFalse(player.UpdateCardsPermissions());
     }
 }
+#pragma warning restore UNT0010 // Component instance creation
