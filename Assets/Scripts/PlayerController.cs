@@ -39,6 +39,11 @@ public class PlayerController : MonoBehaviour
     }
 
     public void SelectCard(Card card) {
+        if(selectedCard != null) {
+            region.LockAssetZonesSelection();
+            region.LockWorkersZonesSelection();
+        }
+
         selectedCard = card;
 
         if(card is AssetCard) {

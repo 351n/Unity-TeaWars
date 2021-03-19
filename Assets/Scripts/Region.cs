@@ -115,8 +115,8 @@ public class Region : MonoBehaviour
 
     private void LockWorkersZones() {
         if(ui) {
-            foreach(AssetUI a in ui.assets) {
-                a.LockSelection();
+            foreach(WorkerUI w in ui.workers) {
+                w.LockSelection();
             }
         }
     }
