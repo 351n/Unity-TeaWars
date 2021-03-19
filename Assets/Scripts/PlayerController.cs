@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
             TrickeryCard t = card as TrickeryCard;
             if(t.Target == Target.Player) {
                 //selection of player
-            } else if (t.Target == Target.Building) {
+            } else if(t.Target == Target.Building) {
                 //selection of player and building
             }
         }
@@ -88,7 +88,7 @@ public class PlayerController : MonoBehaviour
             if(!playedWorkerCard) {
                 playedWorkerCard = true;
             } else {
-                canPlayTwoCards = false;
+                LockPlayingCards();
             }
         } else if(selectedCard is AssetCard && (!playedAssetCard || canPlayTwoCards)) {
             PlayCard(selectedCard as AssetCard, selectedZone);
@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
             if(!playedAssetCard) {
                 playedAssetCard = true;
             } else {
-                canPlayTwoCards = false;
+                LockPlayingCards();
             }
         } else if(selectedCard is TrickeryCard && (!playedTrickeryCard || canPlayTwoCards)) {
             PlayCard(selectedCard as TrickeryCard, selectedTarget);
@@ -104,7 +104,7 @@ public class PlayerController : MonoBehaviour
             if(!playedAssetCard) {
                 playedTrickeryCard = true;
             } else {
-                canPlayTwoCards = false;
+                LockPlayingCards();
             }
         }
 
@@ -119,9 +119,20 @@ public class PlayerController : MonoBehaviour
 
             //check if zero or only one card of any type was played
             canPlayTwoCards = ((!a && !b && !c) || (!a && !b && c) || (!a && b && !c) || (a && !b && !c));
+
+            if(!canPlayTwoCards) {
+                LockPlayingCards();
+            }
         }
 
         return canPlayTwoCards;
+    }
+
+    private void LockPlayingCards() {
+        playedAssetCard = true;
+        playedWorkerCard = true;
+        playedTrickeryCard = true;
+        canPlayTwoCards = false;
     }
 
     internal void PlayCard(Card card, Zone zone) {

@@ -301,13 +301,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a51d646694495b241a9c730fee7f8c34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  region: {fileID: 0}
-  zone: 0
-  isSelectable: 0
   nameText: {fileID: 5837943209218577875}
   image: {fileID: 0}
   effectText: {fileID: 1045196595578534407}
   border: {fileID: 6656746390116508462}
+  region: {fileID: 0}
+  zone: 0
+  type: 0
+  isSelectable: 0
 --- !u!114 &3584112718944395585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,8 +327,8 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 2320656630024295221}
-          m_TargetAssemblyTypeName: AssetUI, ScriptsAssembly
-          m_MethodName: SelectThisAssetZone
+          m_TargetAssemblyTypeName: RegionCardUI, ScriptsAssembly
+          m_MethodName: SelectThisCardZone
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

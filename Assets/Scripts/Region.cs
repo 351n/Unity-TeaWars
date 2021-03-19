@@ -83,7 +83,7 @@ public class Region : MonoBehaviour
 
     private void LockAssetsZones() {
         if(ui) {
-            foreach(AssetUI a in ui.assets) {
+            foreach(RegionCardUI a in ui.assets) {
                 a.LockSelection();
             }
         }
@@ -115,7 +115,7 @@ public class Region : MonoBehaviour
 
     private void LockWorkersZones() {
         if(ui) {
-            foreach(WorkerUI w in ui.workers) {
+            foreach(RegionCardUI w in ui.workers) {
                 w.LockSelection();
             }
         }

@@ -29,11 +29,9 @@ public class PlantatorCard : Card
     }
 
     public override void Apply(PlayerController playerController) {
-        Debug.Log($"Player hand before: {playerController.hand.Count}");
         for(int i = 0; i < cardsDrawn[level]; i++) {
             playerController.hand.Add(CardsController.instance.Draw());
         }
-        Debug.Log($"Player hand after: {playerController.hand.Count}");
     }
 
     public override string ToString() {

@@ -9,16 +9,20 @@ public class RegionGameObject : MonoBehaviour
     public CardGameObject plantatorCard;
     public CardGameObject plantCard;
 
-    public List<AssetUI> assets;
-    public List<WorkerUI> workers;
+    public List<RegionCardUI> assets;
+    public List<RegionCardUI> workers;
 
     internal void UpdateUI() {
         if(!region.isInitialized) { region.InitializeFields(); }
         plantatorCard.UpdateUI(region.plantator);
         plantCard.UpdateUI(region.plant);
 
-        for(int i = 0; i < 4; i++) {
+        for(int i = 0; i < assets.Count; i++) {
             assets[i].UpdateUI(region.GetAsset((Zone)i));
+        }
+
+        for(int i = 0; i < workers.Count; i++) {
+            workers[i].UpdateUI(region.GetWorker((Zone)i));
         }
     }
 

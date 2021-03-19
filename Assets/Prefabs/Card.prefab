@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2534677376146292090}
   - component: {fileID: 2534677376146292356}
   - component: {fileID: 2534677376146292091}
-  - component: {fileID: 1312194778316075838}
+  - component: {fileID: 8903991687623068626}
   - component: {fileID: 3337542877963667085}
   m_Layer: 5
   m_Name: Card
@@ -79,7 +79,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1312194778316075838
+--- !u!114 &8903991687623068626
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -88,12 +88,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2534677376146292089}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02949d465440c5444be859a3c7ae8fb8, type: 3}
+  m_Script: {fileID: 11500000, guid: 4ec30fb0e8f80bb4b8734a1fe36a80b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   nameText: {fileID: 274262380368432773}
   image: {fileID: 0}
   effectText: {fileID: 7545791481819456915}
+  border: {fileID: 0}
 --- !u!114 &3337542877963667085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,8 +112,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1312194778316075838}
-          m_TargetAssemblyTypeName: CardGameObject, ScriptsAssembly
+        - m_Target: {fileID: 8903991687623068626}
+          m_TargetAssemblyTypeName: CardUI, ScriptsAssembly
           m_MethodName: SelectThisCard
           m_Mode: 1
           m_Arguments:
