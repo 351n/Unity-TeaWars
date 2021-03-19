@@ -1,7 +1,9 @@
 # TeaWars
 Autorzy:
 Design: Grzegorz `Pilso` Medwediuk
+
 Grafiki: Wilkomir `Wilkor` Devereux
+
 Implementacja: Kamil `351` Szydłowski
 
 Rozpoczęcie prac: 2021-02-20
@@ -13,16 +15,16 @@ Platforma: Android
 ##Opis gry
 Gra wojny herbaciarzu stawia wyzwanie zostania najbogatszym plantatorem. Ulepszaj właściciela i plantacje, stawiaj budynki, zatrudniaj pracowników, posuwaj się do podstępów wobec innych plantatorów. 
 
-##Instrukcja 
-###Cele gry możliwe zakończenia
+## Instrukcja 
+### Cele gry możliwe zakończenia
 Gra kończy się w momencie gdy gracz nie może odkryć karty plagi. 
 
-###Początek gry
+### Początek gry
 Każdy plantator wybiera planszę włości i bierze 5 kart na rękę.
 
 Połóż karty bożków na wierzchu talii kart plagi, ilość kart bożków jest dwu krotnością liczby graczy. 
 
-###Przebieg tury
+### Przebieg tury
 - Wyciągnij kartę zdarzenia. (chyba że trwają dwie pierwsze tury bądź jest to Twoja pierwsza tura po spadku poniżej 1pkt majątku.
 
 - Rozpatrz karty w polu włości
@@ -53,7 +55,7 @@ Powrót plantatora do rozgrywki - rozpoczyna pomijając kartę plagi.
 
  
 
-###Wątpliwości
+### Wątpliwości
 **Siesta** brak stołówki powoduje całkowite zablokowanie wszystkich kart na włościach, nie można użyć portalu, zwolnić pracownika (można tylko zagrywać karty na włości) 
 **Budynki** budynki nie działają w turze ich zagrania
 **Migracja** w przypadku pełnych włości pracowników innych plantatorów Twój pracownik idzie na discard 
@@ -68,7 +70,7 @@ Powrót plantatora do rozgrywki - rozpoczyna pomijając kartę plagi.
 
  
 
-###Skróty ( w przyszłości ikony)
+### Skróty ( w przyszłości ikony)
 - G - gold / majątek
 - P - poziom plantacji 
 - W - poziom właściciela 
@@ -76,7 +78,7 @@ Powrót plantatora do rozgrywki - rozpoczyna pomijając kartę plagi.
 - B - liczba budynków 
 - R - liczba kart na ręcę
 
-###Rodzaje kart
+### Rodzaje kart
 - Karty zdarzenia
 - Karty plantacji
 - Karty właścicieli
