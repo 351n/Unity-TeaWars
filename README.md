@@ -6,14 +6,20 @@ Grafiki: Wilkomir `Wilkor` Devereux
 
 Implementacja: Kamil `351` Szydłowski
 
+
 Rozpoczęcie prac: 2021-02-20
+
 Planowana data wersji beta: 2021-04-02
 
+
 Silnik: Unity 2020.2.0f1
+
 Platforma: Android
 
-##Opis gry
-Gra wojny herbaciarzu stawia wyzwanie zostania najbogatszym plantatorem. Ulepszaj właściciela i plantacje, stawiaj budynki, zatrudniaj pracowników, posuwaj się do podstępów wobec innych plantatorów. 
+## Opis gry
+Gra wojny herbaciarzu stawia wyzwanie zostania najbogatszym plantatorem. 
+
+Ulepszaj właściciela i plantacje, stawiaj budynki, zatrudniaj pracowników, posuwaj się do podstępów wobec innych plantatorów. 
 
 ## Instrukcja 
 ### Cele gry możliwe zakończenia
@@ -56,11 +62,13 @@ Powrót plantatora do rozgrywki - rozpoczyna pomijając kartę plagi.
  
 
 ### Wątpliwości
-**Siesta** brak stołówki powoduje całkowite zablokowanie wszystkich kart na włościach, nie można użyć portalu, zwolnić pracownika (można tylko zagrywać karty na włości) 
+**Siesta** brak stołówki powoduje całkowite zablokowanie wszystkich kart na włościach, nie można użyć portalu, zwolnić pracownika (można tylko zagrywać karty na włości)
+
 **Budynki** budynki nie działają w turze ich zagrania
+
 **Migracja** w przypadku pełnych włości pracowników innych plantatorów Twój pracownik idzie na discard 
 
-###Słowniczek
+### Słowniczek
 - majątek - pieniądze / punkty 
 - plantator - gracz
 - plantacja - karta hodowanej rośliny 
