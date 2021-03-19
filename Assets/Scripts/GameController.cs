@@ -42,11 +42,13 @@ public class GameController : MonoBehaviour
         if(plague.effect.skippedTurns <= 0) {
             currentPlayer.ApplyPlantEffect();
             currentPlayer.ApplyPlantatorEffect();
+        } else {
+            //Skip
         }
     }
 
     public void EndTurn() {
-
+        //Give control to next player
     }
 
     public List<PlayerController> GetPlayersList() {
