@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public Region region;
 
     public PlayerUI ui;
+    public CardsController cardsController;
 
     private uint gold;
     private Card selectedCard;
@@ -22,6 +23,22 @@ public class PlayerController : MonoBehaviour
     bool playedTrickeryCard = false;
 
     bool canPlayTwoCards = true;
+
+    public PlayerController() {
+        this.region = new Region(this);
+    }
+
+    public PlayerController(CardsController cardsController, uint Gold = 0) {
+        this.region = new Region(this);
+        this.cardsController = cardsController;
+        this.gold = Gold;
+    }
+
+    public PlayerController(Region region, CardsController cardsController, uint Gold = 0) {
+        this.region = region;
+        this.cardsController = cardsController;
+        this.gold = Gold;
+    }
 
     void Start() {
         region.UpdateUI();
@@ -168,6 +185,7 @@ public class PlayerController : MonoBehaviour
             region.PlayCard(card, zone);
         }
 
+        cardsController.Discard(selectedCard);
         hand.Remove(selectedCard);
 
         if(ui) {

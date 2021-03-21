@@ -18,6 +18,9 @@ public class CardsController : MonoBehaviour
     Stack<PlagueCard> plagueStack = new Stack<PlagueCard>();
     Stack<Card> cardsStack = new Stack<Card>();
 
+    public Stack<PlagueCard> discardPlagueStack = new Stack<PlagueCard>();
+    public Stack<Card> discardCardsStack = new Stack<Card>();
+
     void Start() {
         for(int i = 0; i < 5; i++) {
             plagueStack.Push(new PlagueCard("Test Plague Card", "CRD_PLG_1"));
@@ -40,5 +43,13 @@ public class CardsController : MonoBehaviour
         } else {
             return cardsStack.Peek();
         }
+    }
+
+    public void Discard(Card card) {
+        discardCardsStack.Push(card);
+    }
+
+    public void Discard(PlagueCard card) {
+        discardPlagueStack.Push(card);
     }
 }

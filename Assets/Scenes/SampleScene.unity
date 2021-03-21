@@ -226,6 +226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameText: {fileID: 1377851057}
   image: {fileID: 0}
+  costText: {fileID: 0}
   effectText: {fileID: 528991912}
   border: {fileID: 0}
 --- !u!114 &356550876 stripped
@@ -920,7 +921,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nickname: Teadrinker
   region: {fileID: 782772085}
-  regionGameObject: {fileID: 749805192}
   ui: {fileID: 1883752065}
 --- !u!4 &782772084
 Transform:
@@ -2286,7 +2286,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: odkryta talia plagi
+  m_text: odkryta talia kart
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3346,6 +3346,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameText: {fileID: 474766088}
   image: {fileID: 0}
+  costText: {fileID: 0}
   effectText: {fileID: 1694511059}
   border: {fileID: 0}
 --- !u!1001 &1921382234

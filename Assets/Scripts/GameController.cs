@@ -38,6 +38,7 @@ public class GameController : MonoBehaviour
     public void StartTurn() {
         PlagueCard plague = CardsController.instance.GetPlagueCard();
         plague.Apply(GetPlayersList());
+        CardsController.instance.Discard(plague);
 
         if(plague.effect.skippedTurns <= 0) {
             currentPlayer.ApplyPlantEffect();
