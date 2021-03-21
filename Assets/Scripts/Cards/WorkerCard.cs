@@ -1,12 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class WorkerCard : Card
 {
-    int hireCost = 2;
+    uint hireCost = 2;
     Effect useEffect;
     Effect fireEffect;
+
+    public uint HireCost { get => hireCost; set => hireCost = value; }
 
     public WorkerCard(string displayName, string id) : base(displayName, id) {
     }

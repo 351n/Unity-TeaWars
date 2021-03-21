@@ -10,7 +10,6 @@ public class PlayerController : MonoBehaviour
     public List<Card> hand = new List<Card>();
     public Region region;
 
-    public RegionGameObject regionGameObject;
     public PlayerUI ui;
 
     private uint gold;
@@ -25,7 +24,7 @@ public class PlayerController : MonoBehaviour
     bool canPlayTwoCards = true;
 
     void Start() {
-        regionGameObject.UpdateUI();
+        region.UpdateUI();
         ui.UpdateHand(hand);
     }
 
@@ -53,6 +52,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("Cannot play this asset card");
             }
         } else if(card is WorkerCard) {
+            WorkerCard w = card as WorkerCard;
             if(CanPlayWorkerCard()) {
                 region.UnlockWorkerZonesSelection();
             } else {
@@ -95,12 +95,16 @@ public class PlayerController : MonoBehaviour
 
     public void PlaySelectedCard() {
         if(selectedCard is WorkerCard && CanPlayWorkerCard()) {
-            PlayCard(selectedCard as WorkerCard, selectedZone);
+            WorkerCard w = selectedCard as WorkerCard;
+            if(w.HireCost <= Gold) {
+                SubstractGold(w.HireCost);
+                PlayCard(selectedCard as WorkerCard, selectedZone);
 
-            if(!playedWorkerCard) {
-                playedWorkerCard = true;
-            } else {
-                LockPlayingCards();
+                if(!playedWorkerCard) {
+                    playedWorkerCard = true;
+                } else {
+                    LockPlayingCards();
+                }
             }
         } else if(selectedCard is AssetCard && CanPlayAssetCard()) {
             PlayCard(selectedCard as AssetCard, selectedZone);
@@ -197,7 +201,7 @@ public class PlayerController : MonoBehaviour
     }
 
     internal void UpdateRegionUI() {
-        if(regionGameObject)
-            regionGameObject.UpdateUI();
+        if(region)
+            region.UpdateUI();
     }
 }

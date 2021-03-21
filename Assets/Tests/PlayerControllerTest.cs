@@ -124,6 +124,7 @@ public class PlayerControllerTest
         PlayerController player = new PlayerController();
         Region region = new Region(player);
         player.region = region;
+        player.AddGold(1337);
         AssetCard card = new AssetCard("Test Asset Card", "TST");
         AssetCard other = new AssetCard("Other Asset Card", "TST");
 
@@ -143,6 +144,7 @@ public class PlayerControllerTest
         PlayerController player = new PlayerController();
         Region region = new Region(player);
         player.region = region;
+        player.AddGold(1337);
         WorkerCard card = new WorkerCard("Test Worker Card", "TST");
         WorkerCard other = new WorkerCard("Other Worker Card", "TST");
 
@@ -162,6 +164,7 @@ public class PlayerControllerTest
         PlayerController player = new PlayerController();
         Region region = new Region(player);
         player.region = region;
+        player.AddGold(1337);
         AssetCard card = new AssetCard("Test Asset Card", "TST");
         WorkerCard other = new WorkerCard("Test Worker Card", "TST");
 

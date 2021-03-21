@@ -153,6 +153,11 @@ public class Region : MonoBehaviour
 
         return result;
     }
+
+    public void UpdateUI() {
+        if(ui)
+            ui.UpdateUI();
+    }
 }
 
 public enum Zone { Chimera, Cerber, Hydra, Gorgon, None }
