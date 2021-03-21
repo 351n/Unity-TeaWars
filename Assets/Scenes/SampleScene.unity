@@ -922,6 +922,7 @@ MonoBehaviour:
   nickname: Teadrinker
   region: {fileID: 782772085}
   ui: {fileID: 1883752065}
+  cardsController: {fileID: 970955746}
 --- !u!4 &782772084
 Transform:
   m_ObjectHideFlags: 0

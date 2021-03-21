@@ -27,6 +27,8 @@ public class GameController : MonoBehaviour
     private void Initialize() {
         players = new Queue<PlayerController>(FindObjectsOfType<PlayerController>().ToList());
         currentPlayer = players.Peek();
+        //TODO remove this after testing
+        currentPlayer.AddGold(100);
 
         foreach(PlayerController p in GetPlayersList()) {
             for(int i = 0; i < 5; i++) {

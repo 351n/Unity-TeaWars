@@ -201,6 +201,7 @@ MonoBehaviour:
   image: {fileID: 0}
   costText: {fileID: 3470673804011915281}
   effectText: {fileID: 7545791481819456915}
+  background: {fileID: 2432020441875563490}
   border: {fileID: 4637166419193513806}
 --- !u!114 &3337542877963667085
 MonoBehaviour:

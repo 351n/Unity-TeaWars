@@ -165,8 +165,18 @@ public class PlayerController : MonoBehaviour
             //check if zero or only one card of any type was played
             canPlayTwoCards = ((!a && !b && !c) || (!a && !b && c) || (!a && b && !c) || (a && !b && !c));
 
-            if(!canPlayTwoCards) {
-                LockPlayingCards();
+            if(!canPlayTwoCards && ui) {
+                if(playedAssetCard) {
+                    ui.GrayOutAssetCards();
+                }
+
+                if(playedWorkerCard) {
+                    ui.GrayOutWorkerCards();
+                }
+
+                if(playedTrickeryCard) {
+                    ui.GrayOutTrickeryCards();
+                }
             }
         }
 
@@ -178,6 +188,10 @@ public class PlayerController : MonoBehaviour
         playedWorkerCard = true;
         playedTrickeryCard = true;
         canPlayTwoCards = false;
+
+        if(ui) {
+            ui.GrayOutAllCards();
+        }
     }
 
     internal void PlayCard(Card card, Zone zone) {

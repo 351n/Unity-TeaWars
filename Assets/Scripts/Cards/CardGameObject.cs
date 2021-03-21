@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using System;
+using UnityEngine.UI;
 
 public class CardGameObject : MonoBehaviour
 {
@@ -10,6 +8,7 @@ public class CardGameObject : MonoBehaviour
     public Sprite image;
     public TextMeshProUGUI costText;
     public TextMeshProUGUI effectText;
+    public Image background;
     public GameObject border;
     public Card card;
 
@@ -57,5 +56,13 @@ public class CardGameObject : MonoBehaviour
                 costText.text = $"";
             }
         }
+    }
+
+    public void GrayOut() {
+        background.color = Color.gray;
+    }
+
+    public void ChangeBackgroundToDefault() {
+        background.color = Color.white;
     }
 }
