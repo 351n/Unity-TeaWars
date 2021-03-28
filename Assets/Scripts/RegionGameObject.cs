@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class RegionGameObject : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class RegionGameObject : MonoBehaviour
 
     public List<RegionCardUI> assets;
     public List<RegionCardUI> workers;
+
+    public TextMeshProUGUI goldText;
 
     internal void UpdateUI() {
         if(!region.isInitialized) { region.InitializeFields(); }
@@ -23,6 +26,10 @@ public class RegionGameObject : MonoBehaviour
 
         for(int i = 0; i < workers.Count; i++) {
             workers[i].UpdateUI(region.GetWorker((Zone)i));
+        }
+
+        if(goldText) {
+            goldText.text = $"{region.owner.Gold}";
         }
     }
 

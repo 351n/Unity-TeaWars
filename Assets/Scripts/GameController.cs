@@ -28,7 +28,7 @@ public class GameController : MonoBehaviour
         players = new Queue<PlayerController>(FindObjectsOfType<PlayerController>().ToList());
         currentPlayer = players.Peek();
         //TODO remove this after testing
-        currentPlayer.AddGold(100);
+        currentPlayer.AddGold(50);
 
         foreach(PlayerController p in GetPlayersList()) {
             for(int i = 0; i < 5; i++) {
@@ -38,13 +38,17 @@ public class GameController : MonoBehaviour
     }
 
     public void StartTurn() {
+        currentPlayer.UpdateRegionUI();
         PlagueCard plague = CardsController.instance.GetPlagueCard();
         plague.Apply(GetPlayersList());
         CardsController.instance.Discard(plague);
+        currentPlayer.UpdateRegionUI();
 
         if(plague.effect.skippedTurns <= 0) {
             currentPlayer.ApplyPlantEffect();
+            currentPlayer.UpdateRegionUI();
             currentPlayer.ApplyPlantatorEffect();
+            currentPlayer.UpdateRegionUI();
         } else {
             //Skip
         }
