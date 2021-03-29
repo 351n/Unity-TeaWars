@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
 
     bool canPlayTwoCards = true;
 
+
     public PlayerController() {
         this.region = new Region(this);
     }
@@ -58,6 +59,7 @@ public class PlayerController : MonoBehaviour
         if(selectedCard != null) {
             region.LockAssetZonesSelection();
             region.LockWorkersZonesSelection();
+            GameController.instance.LockPlayerSelection();
         }
 
         selectedCard = card;
@@ -66,7 +68,7 @@ public class PlayerController : MonoBehaviour
             if(CanPlayAssetCard()) {
                 region.UnlockAssetZonesSelection();
             } else {
-                Debug.Log("Cannot play this asset card");
+                Debug.Log($"Cannot play this asset card {canPlayTwoCards}");
             }
         } else if(card is WorkerCard) {
             WorkerCard w = card as WorkerCard;
@@ -79,13 +81,21 @@ public class PlayerController : MonoBehaviour
             if(CanPlayTrickeryCard()) {
                 TrickeryCard t = card as TrickeryCard;
                 if(t.Target == Target.Player) {
-                    //selection of player
+                    GameController.instance.UnlockPlayerSelection();
                 } else if(t.Target == Target.Building) {
                     //selection of player and building
                 }
             } else {
                 Debug.Log("Cannot play this trickery card");
             }
+        }
+    }
+
+    internal void SelectPlayer(PlayerController player) {
+        selectedTarget = player;
+
+        if(ui) {
+            ui.ShowConfirmButton();
         }
     }
 
@@ -107,12 +117,29 @@ public class PlayerController : MonoBehaviour
 
     private void ResetSelection() {
         selectedCard = null;
+        selectedTarget = null;
         selectedZone = Zone.None;
+
+        UpdateCardsPermissions();
     }
 
     public void PlaySelectedCard() {
-        if(selectedCard is WorkerCard && CanPlayWorkerCard()) {
+        if(selectedCard is AssetCard && CanPlayAssetCard()) {
+            AssetCard a = selectedCard as AssetCard;
+
+            if(a.playCost <= Gold) {
+                SubstractGold(a.playCost);
+                PlayCard(selectedCard as AssetCard, selectedZone);
+
+                if(!playedAssetCard) {
+                    playedAssetCard = true;
+                } else {
+                    LockPlayingCards();
+                }
+            }
+        } else if(selectedCard is WorkerCard && CanPlayWorkerCard()) {
             WorkerCard w = selectedCard as WorkerCard;
+
             if(w.HireCost <= Gold) {
                 SubstractGold(w.HireCost);
                 PlayCard(selectedCard as WorkerCard, selectedZone);
@@ -123,30 +150,20 @@ public class PlayerController : MonoBehaviour
                     LockPlayingCards();
                 }
             }
-        } else if(selectedCard is AssetCard && CanPlayAssetCard()) {
-            PlayCard(selectedCard as AssetCard, selectedZone);
-
-            if(!playedAssetCard) {
-                playedAssetCard = true;
-            } else {
-                LockPlayingCards();
-            }
         } else if(selectedCard is TrickeryCard && CanPlayTrickeryCard()) {
             PlayCard(selectedCard as TrickeryCard, selectedTarget);
 
-            if(!playedAssetCard) {
+            if(!playedTrickeryCard) {
                 playedTrickeryCard = true;
             } else {
                 LockPlayingCards();
             }
         }
 
+        UpdateRegionUI();
         UpdateCardsPermissions();
     }
 
-    private bool CanPlayTrickeryCard() {
-        return (!playedTrickeryCard || canPlayTwoCards);
-    }
 
     private bool CanPlayAssetCard() {
         return (!playedAssetCard || canPlayTwoCards);
@@ -156,6 +173,10 @@ public class PlayerController : MonoBehaviour
         return (!playedWorkerCard || canPlayTwoCards);
     }
 
+    private bool CanPlayTrickeryCard() {
+        return (!playedTrickeryCard || canPlayTwoCards);
+    }
+
     public bool UpdateCardsPermissions() {
         if(canPlayTwoCards) {
             bool a = playedAssetCard;
@@ -163,20 +184,31 @@ public class PlayerController : MonoBehaviour
             bool c = playedTrickeryCard;
 
             //check if zero or only one card of any type was played
-            canPlayTwoCards = ((!a && !b && !c) || (!a && !b && c) || (!a && b && !c) || (a && !b && !c));
+            if(!a && !b && !c) {
+                canPlayTwoCards = true;
+            } else if(!a && !b && c) {
+                canPlayTwoCards = true;
+            } else if(!a && b && !c) {
+                canPlayTwoCards = true;
+            } else if(a && !b && !c) {
+                canPlayTwoCards = true;
+            } else {
+                canPlayTwoCards = false;
+            }
+        }
 
-            if(!canPlayTwoCards && ui) {
-                if(playedAssetCard) {
-                    ui.GrayOutAssetCards();
-                }
+        if(!canPlayTwoCards && ui) {
+            Debug.Log("here");
+            if(playedAssetCard) {
+                ui.GrayOutAssetCards();
+            }
 
-                if(playedWorkerCard) {
-                    ui.GrayOutWorkerCards();
-                }
+            if(playedWorkerCard) {
+                ui.GrayOutWorkerCards();
+            }
 
-                if(playedTrickeryCard) {
-                    ui.GrayOutTrickeryCards();
-                }
+            if(playedTrickeryCard) {
+                ui.GrayOutTrickeryCards();
             }
         }
 
@@ -213,7 +245,17 @@ public class PlayerController : MonoBehaviour
     }
 
     internal void PlayCard(TrickeryCard card, PlayerController target) {
-        throw new NotImplementedException();
+        Debug.Log($"{name} used trickery on {target}");
+
+        hand.Remove(card);
+
+        if(ui) {
+            ui.UpdateHand(hand);
+            ui.HideConfirmButton();
+        }
+
+        GameController.instance.ui.LockPlayerSelection();
+        ResetSelection();
     }
 
     public void AddGold(uint value) {

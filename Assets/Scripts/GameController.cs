@@ -17,7 +17,9 @@ public class GameController : MonoBehaviour
     #endregion
 
     Queue<PlayerController> players;
+
     public PlayerController currentPlayer;
+    public GameUI ui;
 
     void Start() {
         Initialize();
@@ -33,6 +35,15 @@ public class GameController : MonoBehaviour
         foreach(PlayerController p in GetPlayersList()) {
             for(int i = 0; i < 5; i++) {
                 p.hand.Add(CardsController.instance.Draw());
+            }
+
+            if(p != currentPlayer) {
+                foreach(OtherPlayerUI u in ui.otherPlayersUIs) {
+                    if(u.player is null) {
+                        u.player = p;
+                        break;
+                    }
+                }
             }
         }
     }
@@ -64,5 +75,17 @@ public class GameController : MonoBehaviour
 
     internal void UpdateRegionUI() {
         currentPlayer.UpdateRegionUI();
+    }
+
+    internal void UnlockPlayerSelection() {
+        ui.UnlockPlayerSelection();
+    }
+
+    internal void LockPlayerSelection() {
+        ui.LockPlayerSelection();
+    }
+
+    internal void SelectPlayer(PlayerController player) {
+        currentPlayer.SelectPlayer(player);
     }
 }

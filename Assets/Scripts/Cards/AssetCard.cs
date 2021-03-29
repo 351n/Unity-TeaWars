@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AssetCard : Card
 {
-    public int playCost = 1;
+    public uint playCost = 1;
 
     public AssetCard(string displayName, string id) : base(displayName, id) {
     }
