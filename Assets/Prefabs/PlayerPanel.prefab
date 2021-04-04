@@ -377,7 +377,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b8dcad114766f54692ed891b3cb6974, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   selectObject: {fileID: 6692967896860148758}
+  playerText: {fileID: 6692967895731428613}
   isSelectable: 0
 --- !u!114 &331616655361144143
 MonoBehaviour:

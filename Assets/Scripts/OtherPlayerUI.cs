@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class OtherPlayerUI : MonoBehaviour
 {
@@ -8,6 +10,7 @@ public class OtherPlayerUI : MonoBehaviour
     public PlayerController player;
 
     public GameObject selectObject;
+    public TextMeshProUGUI playerText;
 
     public bool isSelectable = false;
 
@@ -27,5 +30,10 @@ public class OtherPlayerUI : MonoBehaviour
         isSelectable = false;
         if(selectObject)
             selectObject.SetActive(false);
+    }
+
+    internal void AssingPlayer(PlayerController p) {
+        player = p;
+        playerText.text = p.nickname;
     }
 }

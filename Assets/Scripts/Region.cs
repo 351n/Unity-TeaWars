@@ -29,10 +29,18 @@ public class Region : MonoBehaviour
     }
 
     internal void ApplyPlantEffect() {
+        if(!isInitialized) {
+            InitializeFields();
+        }
+
         plant.Apply(owner);
     }
 
     internal void ApplyPlantatorEffect() {
+        if(!isInitialized) {
+            InitializeFields();
+        }
+
         plantator.Apply(owner);
     }
 

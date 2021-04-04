@@ -5,14 +5,16 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public const int HAND_MAX_ITEMS = 10;
+
     public string nickname;
     public uint Gold { get => gold; private set => gold = value; }
-    public List<Card> hand = new List<Card>();
     public Region region;
 
     public PlayerUI ui;
     public CardsController cardsController;
 
+    private List<Card> hand = new List<Card>();
     private uint gold;
     private Card selectedCard;
     private Zone selectedZone;
@@ -43,7 +45,9 @@ public class PlayerController : MonoBehaviour
 
     void Start() {
         region.UpdateUI();
-        ui.UpdateHand(hand);
+
+        if(ui)
+            ui.UpdateHand(hand);
     }
 
     internal void ApplyPlantEffect() {
@@ -52,7 +56,20 @@ public class PlayerController : MonoBehaviour
 
     internal void ApplyPlantatorEffect() {
         region.ApplyPlantatorEffect();
-        ui.UpdateHand(hand);
+
+        if(ui)
+            ui.UpdateHand(hand);
+    }
+
+    public void AddToHand(Card card) {
+        if(hand.Count < HAND_MAX_ITEMS)
+            hand.Add(card);
+    }
+
+    public void AddToHand(List<Card> cards) {
+        foreach(Card c in cards) {
+            AddToHand(c);
+        }
     }
 
     public void SelectCard(Card card) {
@@ -277,5 +294,22 @@ public class PlayerController : MonoBehaviour
     internal void UpdateRegionUI() {
         if(region)
             region.UpdateUI();
+    }
+
+    internal void AssingUI(PlayerUI playerUI, RegionGameObject regionGameObject) {
+        ui = playerUI;
+        region.ui = regionGameObject;
+        region.ui.region = region;
+    }
+
+    internal void RevokeUI() {
+        ResetSelection();
+        ui.HideConfirmButton();
+        region.LockAssetZonesSelection();
+        region.LockWorkersZonesSelection();
+        GameController.instance.ui.LockPlayerSelection();
+
+        ui = null;
+        region.ui = null;
     }
 }

@@ -27,7 +27,7 @@ public class CardsController : MonoBehaviour
 
             cardsStack.Push(new TrickeryCard("Test Trickery Card", "CRD_TRC_1"));
 
-            cardsStack.Push(new WorkerCard("Test Worker Card", "CRD_WRK_1"));
+            cardsStack.Push(new WorkerCard("Test Worker Card", "CRD_WRK_1", new Effect(gold: 1, cardDraw: 2), new Effect(gold: 1, cardDraw: 3)));
 
             cardsStack.Push(new AssetCard("Test Asset Card", "CRD_AST_1"));
         }

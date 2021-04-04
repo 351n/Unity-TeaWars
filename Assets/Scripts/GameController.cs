@@ -28,19 +28,31 @@ public class GameController : MonoBehaviour
 
     private void Initialize() {
         players = new Queue<PlayerController>(FindObjectsOfType<PlayerController>().ToList());
-        currentPlayer = players.Peek();
-        //TODO remove this after testing
-        currentPlayer.AddGold(50);
+        currentPlayer = players.Dequeue();
+        ui.currPlayerText.text = currentPlayer.nickname;
+        Debug.Log($"Current {currentPlayer.nickname}");
+        players.Enqueue(currentPlayer);
 
         foreach(PlayerController p in GetPlayersList()) {
+            p.AddGold(50);
             for(int i = 0; i < 5; i++) {
-                p.hand.Add(CardsController.instance.Draw());
+                p.AddToHand(CardsController.instance.Draw());
             }
+        }
+    }
 
+    private void AssignPlayersUIs() {
+        currentPlayer.AssingUI(ui.playerUI, ui.rgo);
+
+        foreach(OtherPlayerUI u in ui.otherPlayersUIs) {
+            u.player = null;
+        }
+
+        foreach(PlayerController p in GetPlayersList()) {
             if(p != currentPlayer) {
                 foreach(OtherPlayerUI u in ui.otherPlayersUIs) {
                     if(u.player is null) {
-                        u.player = p;
+                        u.AssingPlayer(p);
                         break;
                     }
                 }
@@ -49,7 +61,9 @@ public class GameController : MonoBehaviour
     }
 
     public void StartTurn() {
+        AssignPlayersUIs();
         currentPlayer.UpdateRegionUI();
+
         PlagueCard plague = CardsController.instance.GetPlagueCard();
         plague.Apply(GetPlayersList());
         CardsController.instance.Discard(plague);
@@ -66,7 +80,14 @@ public class GameController : MonoBehaviour
     }
 
     public void EndTurn() {
-        //Give control to next player
+        currentPlayer.RevokeUI();
+        Debug.Log("Ending turn");
+        currentPlayer = players.Dequeue();
+        players.Enqueue(currentPlayer);
+        ui.currPlayerText.text = currentPlayer.nickname;
+        Debug.Log($"{currentPlayer.nickname} gets control");
+
+        StartTurn();
     }
 
     public List<PlayerController> GetPlayersList() {
@@ -87,5 +108,9 @@ public class GameController : MonoBehaviour
 
     internal void SelectPlayer(PlayerController player) {
         currentPlayer.SelectPlayer(player);
+    }
+
+    public void PlaySelectedCard() {
+        currentPlayer.PlaySelectedCard();
     }
 }

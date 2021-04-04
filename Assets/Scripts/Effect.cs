@@ -18,7 +18,7 @@ public class Effect
         this.skippedTurns = 0;
     }
 
-    public Effect(int gold, int cardDraw, int sabotage, int theft, int skippedTurns) {
+    public Effect(int gold = 0, int cardDraw = 0, int sabotage = 0, int theft = 0, int skippedTurns = 0) {
         this.gold = gold;
         this.cardDraw = cardDraw;
         this.sabotage = sabotage;
@@ -27,6 +27,32 @@ public class Effect
     }
 
     public override string ToString() {
-        return $"(G:{gold}, D:{cardDraw}, S:{sabotage}, U:{theft}, sk:{skippedTurns})";
+        string result = "(";
+
+        if(gold != 0) {
+            result += $"G: {gold},";
+        }
+
+        if(cardDraw != 0) {
+            result += $"D: {cardDraw},";
+        }
+
+        if(sabotage != 0) {
+            result += $"S: {sabotage},";
+        }
+
+        if(theft != 0) {
+            result += $"U: {theft},";
+        }
+
+        if(skippedTurns != 0) {
+            result += $"sk: {skippedTurns}";
+        }
+
+        if(result.EndsWith(",")) {
+            result = result.TrimEnd(',');
+        }
+
+        return result + ")";
     }
 }

@@ -30,7 +30,7 @@ public class PlantatorCard : Card
 
     public override void Apply(PlayerController playerController) {
         for(int i = 0; i < cardsDrawn[level]; i++) {
-            playerController.hand.Add(CardsController.instance.Draw());
+            playerController.AddToHand(CardsController.instance.Draw());
         }
     }
 

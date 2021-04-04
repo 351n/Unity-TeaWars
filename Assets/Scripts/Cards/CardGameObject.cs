@@ -38,13 +38,13 @@ public class CardGameObject : MonoBehaviour
                 }
             } else if(card is WorkerCard) {
                 WorkerCard p = card as WorkerCard;
-                effectText.text = $"This is Worker";
+                effectText.text = $"{p.GetEffectText()}";
                 if(costText) {
                     costText.text = $"-{p.HireCost}G";
                 }
             } else if(card is TrickeryCard) {
                 TrickeryCard p = card as TrickeryCard;
-                effectText.text = $"This is Trickery";
+                effectText.text = $"T: {p.Target}\nThis is Trickery";
                 if(costText) {
                     costText.text = $"";
                 }
