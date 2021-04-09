@@ -45,6 +45,16 @@ public class CardsController : MonoBehaviour
         }
     }
 
+    internal List<Card> Draw(int count) {
+        List<Card> result = new List<Card>();
+
+        for(int i = 0; i < count; i++) {
+            result.Add(Draw());
+        }
+
+        return result;
+    }
+
     public void Discard(Card card) {
         discardCardsStack.Push(card);
     }

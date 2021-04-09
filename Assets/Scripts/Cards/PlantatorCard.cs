@@ -29,9 +29,9 @@ public class PlantatorCard : Card
     }
 
     public override void Apply(PlayerController playerController) {
-        for(int i = 0; i < cardsDrawn[level]; i++) {
-            playerController.AddToHand(CardsController.instance.Draw());
-        }
+        Effect e = new Effect(cardDraw: cardsDrawn[level]);
+
+        playerController.ApplyEffect(e);
     }
 
     public override string ToString() {

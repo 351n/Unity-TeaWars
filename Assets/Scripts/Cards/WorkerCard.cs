@@ -22,7 +22,8 @@ public class WorkerCard : Card
     }
 
     public override void Apply(PlayerController playerController) {
-        throw new System.NotImplementedException();
+        playerController.ApplyEffect(useEffect);
+
     }
 
     internal string GetEffectText() {

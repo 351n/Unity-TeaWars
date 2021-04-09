@@ -44,21 +44,22 @@ public class PlayerController : MonoBehaviour
     }
 
     void Start() {
-        region.UpdateUI();
-
-        if(ui)
-            ui.UpdateHand(hand);
+        UpdateUI();
     }
 
     internal void ApplyPlantEffect() {
-        region.ApplyPlantEffect();
+        ApplyEffect(region.plant.GetEffect());
+        //region.ApplyPlantEffect();
     }
 
     internal void ApplyPlantatorEffect() {
         region.ApplyPlantatorEffect();
 
-        if(ui)
-            ui.UpdateHand(hand);
+        UpdateHand();
+    }
+
+    public void DrawToHand(int count) {
+        AddToHand(CardsController.instance.Draw(count));
     }
 
     public void AddToHand(Card card) {
@@ -251,8 +252,9 @@ public class PlayerController : MonoBehaviour
         cardsController.Discard(selectedCard);
         hand.Remove(selectedCard);
 
+        UpdateHand();
+
         if(ui) {
-            ui.UpdateHand(hand);
             ui.HideConfirmButton();
         }
 
@@ -266,13 +268,26 @@ public class PlayerController : MonoBehaviour
 
         hand.Remove(card);
 
+        UpdateHand();
+
         if(ui) {
-            ui.UpdateHand(hand);
             ui.HideConfirmButton();
         }
 
         GameController.instance.ui.LockPlayerSelection();
         ResetSelection();
+    }
+
+    public void ApplyEffect(Effect effect) {
+        if(effect.gold > 0) {
+            AddGold((uint)effect.gold);
+        } else {
+            SubstractGold((uint)Mathf.Abs(effect.gold));
+        }
+
+        if(effect.cardDraw > 0) {
+            DrawToHand(effect.cardDraw);
+        }
     }
 
     public void AddGold(uint value) {
@@ -294,6 +309,16 @@ public class PlayerController : MonoBehaviour
     internal void UpdateRegionUI() {
         if(region)
             region.UpdateUI();
+    }
+
+    internal void UpdateHand() {
+        if(ui)
+            ui.UpdateHand(hand);
+    }
+
+    internal void UpdateUI() {
+        UpdateRegionUI();
+        UpdateHand();
     }
 
     internal void AssingUI(PlayerUI playerUI, RegionGameObject regionGameObject) {

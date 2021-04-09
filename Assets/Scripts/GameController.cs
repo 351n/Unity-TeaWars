@@ -16,6 +16,9 @@ public class GameController : MonoBehaviour
 
     #endregion
 
+    public const int HAND_START_ITEMS = 5;
+    public const int START_GOLD = 50;
+
     Queue<PlayerController> players;
 
     public PlayerController currentPlayer;
@@ -34,10 +37,8 @@ public class GameController : MonoBehaviour
         players.Enqueue(currentPlayer);
 
         foreach(PlayerController p in GetPlayersList()) {
-            p.AddGold(50);
-            for(int i = 0; i < 5; i++) {
-                p.AddToHand(CardsController.instance.Draw());
-            }
+            p.AddGold(START_GOLD);
+            p.DrawToHand(HAND_START_ITEMS);
         }
     }
 
@@ -75,7 +76,7 @@ public class GameController : MonoBehaviour
             currentPlayer.ApplyPlantatorEffect();
             currentPlayer.UpdateRegionUI();
         } else {
-            //Skip
+            EndTurn();
         }
     }
 

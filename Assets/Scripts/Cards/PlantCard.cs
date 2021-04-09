@@ -32,8 +32,12 @@ public class PlantCard : Card
         return profit[upgradeLevel];
     }
 
+    public Effect GetEffect() {
+        return new Effect(gold: (int)GetProfitValue());
+    }
+
     public override void Apply(PlayerController playerController) {
-        playerController.AddGold(profit[upgradeLevel]);
+        playerController.ApplyEffect(GetEffect());
     }
 
     public override string ToString() {
